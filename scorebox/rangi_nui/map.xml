@@ -1,6 +1,6 @@
 <map proto="1.5.0">
 <name>Rangi-nui</name>
-<version>1.1.1</version>
+<version>1.1.2</version>
 <objective>Score the most points in 7 minutes by collecting coins and jumping in the center scorebox!</objective>
 <gamemode>scorebox</gamemode>
 <created>2022-08-22</created>
@@ -229,15 +229,15 @@
         <action>
             <action id="increment-active-state"/>
             <action id="update-platform-blocks"/>
-            <action filter="active=1">
-                <message text="`6» `e`lTop platforms activated! `6«"/>
-            </action>
-            <action filter="active=2">
-                <message text="`6» `e`lMiddle platforms activated! `6«"/>
-            </action>
-            <action filter="active=3">
-                <message text="`6» `e`lBottom platforms activated! `6«"/>
-            </action>
+            <message text="`6» `e`l{which} platforms activated! `6«">
+                <replacements>
+                    <switch id="which" value="active">
+                        <case match="1" result="Top"/>
+                        <case match="2" result="Middle"/>
+                        <case match="3" result="Bottom"/>
+                    </switch>
+                </replacements>
+            </message>
         </action>
     </trigger>
     <trigger scope="match">

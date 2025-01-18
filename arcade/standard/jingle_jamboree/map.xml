@@ -1,6 +1,6 @@
 <map proto="1.5.0" game="Score">
 <name>Jingle Jamboree</name>
-<version>1.1.0</version>
+<version>1.1.1</version>
 <objective>Complete all of the games!</objective>
 <created>2024-12-08</created>
 <phase>staging</phase>
@@ -248,12 +248,19 @@
             <set var="players_completed" value="0"/>
             <set var="tmp_match" value="0"/>
             <set var="game" value="game + 1"/>
-            <action filter="game=1"><message text="`3Up Next: `b[1] Hungry Riendeer"/></action>
-            <action filter="game=2"><message text="`3Up Next: `b[2] Present Hunt"/></action>
-            <action filter="game=3"><message text="`3Up Next: `b[3] Winter Speedway"/></action>
-            <action filter="game=4"><message text="`3Up Next: `b[4] Pakour"/></action>
-            <action filter="game=5"><message text="`3Up Next: `b[5] Chimney Sweepers"/></action>
-            <action filter="game=6"><message text="`3Up Next: `b[6] Frosted Corridors"/></action>
+            <message text="`3Up Next: `b[{0}] {game}">
+                <replacements>
+                    <decimal id="0" value="game"/>
+                    <switch id="game" value="game">
+                        <case match="1" result="Hungry Reindeer"/>
+                        <case match="2" result="Present Hunt"/>
+                        <case match="3" result="Winter Speedway"/>
+                        <case match="4" result="Parkour"/>
+                        <case match="5" result="Chimney Sweepers"/>
+                        <case match="6" result="Frosted Corridors"/>
+                    </switch>
+                </replacements>
+            </message>
         </action>
     </trigger>
     <message id="start-countdown-3" text="{ translate: 'countdown.matchStart', color: 'green', with: [{ translate: 'misc.seconds', with: [{ text: '3', color: 'dark_red' }] }] }"/>
@@ -456,6 +463,35 @@
 <variables>
     <variable id="g2_target" scope="match" default="-1"/>
 </variables>
+<replacements>
+    <switch id="santa-block-to-find" value="g2_target" scope="match">
+        <case match="0" result="`2`lEmeralds"/>
+        <case match="1" result="`2`lMelons"/>
+        <case match="2" result="`1`lLapis Lazuli"/>
+        <case match="3" result="`4`lRedstone"/>
+        <case match="4" result="`8`lNote Blocks"/>
+        <case match="5" result="`4`lTNT"/>
+        <case match="6" result="`5`lObsidian"/>
+        <case match="7" result="`8`lCrafting Tables"/>
+        <case match="8" result="`6`lGold"/>
+        <case match="9" result="`3`lIron"/>
+        <case match="10" result="`e`lSponges"/>
+        <case match="11" result="`e`lEnd Stone"/>
+        <case match="12" result="`6`lPumpkins"/>
+        <case match="13" result="`2`lHay Bale"/>
+        <case match="14" result="`2`lOak Logs"/>
+        <case match="15" result="`6`lGlowstone"/>
+        <case match="16" result="`3`lDiamonds"/>
+        <case match="17" result="`e`lSandstone"/>
+        <case match="18" result="`e`lSand"/>
+        <case match="19" result="`4`lRed Mushroom"/>
+        <case match="20" result="`3`lBookshelves"/>
+        <case match="21" result="`8`lSoul Sand"/>
+        <case match="22" result="`8`lBedrock"/>
+        <case match="23" result="`3`lClay"/>
+        <case match="24" result="`3`lCobblestone"/>
+    </switch>
+</replacements>
 <actions>
     <trigger scope="match" filter="g2-running">
         <action>
@@ -497,31 +533,11 @@
             </switch-scope>
             <set var="g2_target" value="floor(random() * 25)"/>
             <message text=" "/>
-            <action filter="g2_target=0"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `2`lEmeralds`r!"/></action>
-            <action filter="g2_target=1"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `2`lMelons`r!"/></action>
-            <action filter="g2_target=2"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `1`lLapis Lazuli`r!"/></action>
-            <action filter="g2_target=3"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `4`lRedstone`r!"/></action>
-            <action filter="g2_target=4"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `8`lNote Blocks`r!"/></action>
-            <action filter="g2_target=5"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `4`lTNT`r!"/></action>
-            <action filter="g2_target=6"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `5`lObsidian`r!"/></action>
-            <action filter="g2_target=7"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `8`lCrafting Tables`r!"/></action>
-            <action filter="g2_target=8"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `6`lGold`r!"/></action>
-            <action filter="g2_target=9"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `3`lIron`r!"/></action>
-            <action filter="g2_target=10"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `e`lSponges`r!"/></action>
-            <action filter="g2_target=11"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `e`lEnd Stone`r!"/></action>
-            <action filter="g2_target=12"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `6`lPumpkins`r!"/></action>
-            <action filter="g2_target=13"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `2`lHay Bale`r!"/></action>
-            <action filter="g2_target=14"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `2`lOak Logs`r!"/></action>
-            <action filter="g2_target=15"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `6`lGlowstone`r!"/></action>
-            <action filter="g2_target=16"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `3`lDiamonds`r!"/></action>
-            <action filter="g2_target=17"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `e`lSandstone`r!"/></action>
-            <action filter="g2_target=18"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `e`lSand`r!"/></action>
-            <action filter="g2_target=19"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `4`lRed Mushroom`r!"/></action>
-            <action filter="g2_target=20"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `3`lBookshelves`r!"/></action>
-            <action filter="g2_target=21"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `8`lSoul Sand`r!"/></action>
-            <action filter="g2_target=22"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `8`lBedrock`r!"/></action>
-            <action filter="g2_target=23"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `3`lClay`r!"/></action>
-            <action filter="g2_target=24"><message text="&lt;`cSanta`r&gt;: Help me find the present containing `3`lCobblestone`r!"/></action>
+            <message text="&lt;`cSanta`r&gt;: Help me find the present containing {block}!">
+                <replacements>
+                    <replacement id="block">santa-block-to-find</replacement>
+                </replacements>
+            </message>
             <message text=" "/>
         </action>
     </action>
@@ -530,31 +546,11 @@
             <pulse duration="0.5s" period="1s" filter="all(g2-running, g2_target=0..)"/>
         </filter>
         <action id="g2-announce-target-actionbar" scope="match">
-            <action filter="g2_target=0"><message actionbar="Find the `2`lEmeralds`r!"/></action>
-            <action filter="g2_target=1"><message actionbar="Find the `2`lMelons`r!"/></action>
-            <action filter="g2_target=2"><message actionbar="Find the `1`lLapis Lazuli`r!"/></action>
-            <action filter="g2_target=3"><message actionbar="Find the `4`lRedstone`r!"/></action>
-            <action filter="g2_target=4"><message actionbar="Find the `8`lNote Blocks`r!"/></action>
-            <action filter="g2_target=5"><message actionbar="Find the `4`lTNT`r!"/></action>
-            <action filter="g2_target=6"><message actionbar="Find the `5`lObsidian`r!"/></action>
-            <action filter="g2_target=7"><message actionbar="Find the `8`lCrafting Tables`r!"/></action>
-            <action filter="g2_target=8"><message actionbar="Find the `6`lGold`r!"/></action>
-            <action filter="g2_target=9"><message actionbar="Find the `3`lIron`r!"/></action>
-            <action filter="g2_target=10"><message actionbar="Find the `e`lSponges`r!"/></action>
-            <action filter="g2_target=11"><message actionbar="Find the `e`lEnd Stone`r!"/></action>
-            <action filter="g2_target=12"><message actionbar="Find the `6`lPumpkins`r!"/></action>
-            <action filter="g2_target=13"><message actionbar="Find the `2`lHay Bale`r!"/></action>
-            <action filter="g2_target=14"><message actionbar="Find the `2`lOak Logs`r!"/></action>
-            <action filter="g2_target=15"><message actionbar="Find the `6`lGlowstone`r!"/></action>
-            <action filter="g2_target=16"><message actionbar="Find the `3`lDiamonds`r!"/></action>
-            <action filter="g2_target=17"><message actionbar="Find the `e`lSandstone`r!"/></action>
-            <action filter="g2_target=18"><message actionbar="Find the `e`lSand`r!"/></action>
-            <action filter="g2_target=19"><message actionbar="Find the `4`lRed Mushroom`r!"/></action>
-            <action filter="g2_target=20"><message actionbar="Find the `3`lBookshelves`r!"/></action>
-            <action filter="g2_target=21"><message actionbar="Find the `8`lSoul Sand`r!"/></action>
-            <action filter="g2_target=22"><message actionbar="Find the `8`lBedrock`r!"/></action>
-            <action filter="g2_target=23"><message actionbar="Find the `3`lClay`r!"/></action>
-            <action filter="g2_target=24"><message actionbar="Find the `3`lCobblestone`r!"/></action>
+            <message actionbar="Find the {block}!">
+                <replacements>
+                    <replacement id="block">santa-block-to-find</replacement>
+                </replacements>
+            </message>
         </action>
     </trigger>
 </actions>

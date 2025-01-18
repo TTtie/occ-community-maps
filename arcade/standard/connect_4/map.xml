@@ -1,6 +1,6 @@
 <map proto="1.5.0" game="Arcade">
 <name>Connect 4</name>
-<version>1.0.3</version>
+<version>1.0.4</version>
 <phase>staging</phase>
 <created>2024-11-04</created>
 <objective>Claim 4 tiles in a row to win!</objective>
@@ -264,20 +264,19 @@
             <action id="place-visual-win-marker"/>
             <action filter="state=-${team_x}">
                 <set var="x_score" value="4"/>
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `eYellow `rhas made `a{0} in a row `rand won the game!">
-                    <replacements>
-                        <decimal id="0" value="top"/>
-                    </replacements>
-                </message>
             </action>
             <action filter="state=-${team_o}">
                 <set var="o_score" value="4"/>
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `4Red `rhas made `a{0} in a row `rand won the game!">
-                    <replacements>
-                        <decimal id="0" value="top"/>
-                    </replacements>
-                </message>
             </action>
+            <message text="`7[`6Arena Master`7] `6Tirion`r: {team} has made `a{0} in a row `rand won the game!">
+                <replacements>
+                    <decimal id="0" value="top"/>
+                    <switch id="team" value="state">
+                        <case match="-${team_x}" result="`eYellow"/>
+                        <case match="-${team_o}" result="`4Red"/>
+                    </switch>
+                </replacements>
+            </message>
         </action>
     </trigger>
     <trigger scope="match">
@@ -301,13 +300,19 @@
         <action filter="next_voter=${team_x}">
             <set var="x_currently_voting" value="1"/>
             <set var="o_currently_voting" value="0"/>
-            <message text="`7[`6Arena Master`7] `6Tirion`r: `eYellow `rwill now vote on which column to drop their next chip!"/>
         </action>
         <action filter="next_voter=${team_o}">
             <set var="x_currently_voting" value="0"/>
             <set var="o_currently_voting" value="1"/>
-            <message text="`7[`6Arena Master`7] `6Tirion`r: `4Red `rwill now vote on which column to drop their next chip!"/>
         </action>
+        <message text="`7[`6Arena Master`7] `6Tirion`r: {team} will now vote on which column to drop their next chip!">
+            <replacements>
+                <switch id="team" value="next_voter">
+                    <case match="${team_x}" result="`eYellow"/>
+                    <case match="${team_o}" result="`4Red"/>
+                </switch>
+            </replacements>
+        </message>
         <switch-scope inner="team" filter="currently_voting=1">
             <switch-scope inner="player">
                 <kit id="main-kit"/>

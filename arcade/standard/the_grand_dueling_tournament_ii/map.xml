@@ -9,7 +9,7 @@
                                                     Definitive Edition
 -->
 <name>The Grand Dueling Tournament II</name>
-<version>2.8.2</version>
+<version>2.8.3</version>
 <objective>Defeat opposing teams in The Grand ${tournament-type} Tournament!</objective>
 <phase>staging</phase>
 <variant id="spleef" world="spleef" override="true">The Grand Spleefing Tournament II</variant>
@@ -2356,6 +2356,52 @@
         <variable id="current_platform_bridge"/>
     </if>
 </variables>
+<replacements>
+    <switch id="current-kit-replacement" value="current_kit" scope="match">
+        <if constant="kit-count" constant-value="1.." constant-comparison="range">
+            <case match="0" result="${kit-0-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="2.." constant-comparison="range">
+            <case match="1" result="${kit-1-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="3.." constant-comparison="range">
+            <case match="2" result="${kit-2-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="4.." constant-comparison="range">
+            <case match="3" result="${kit-3-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="5.." constant-comparison="range">
+            <case match="4" result="${kit-4-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="6.." constant-comparison="range">
+            <case match="5" result="${kit-5-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="7.." constant-comparison="range">
+            <case match="6" result="${kit-6-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="8.." constant-comparison="range">
+            <case match="7" result="${kit-7-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="9.." constant-comparison="range">
+            <case match="8" result="${kit-8-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="10.." constant-comparison="range">
+            <case match="9" result="${kit-9-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="11.." constant-comparison="range">
+            <case match="10" result="${kit-10-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="12.." constant-comparison="range">
+            <case match="11" result="${kit-11-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="13.." constant-comparison="range">
+            <case match="12" result="${kit-12-name}"/>
+        </if>
+        <if constant="kit-count" constant-value="14.." constant-comparison="range">
+            <case match="13" result="${kit-13-name}"/>
+        </if>
+    </switch>
+</replacements>
 <actions>
     <!--
     kit decider
@@ -2512,11 +2558,15 @@
         <switch-scope inner="player" filter="all(participating, any(all(round-1-teleport, not(round-1-finished)), all(round-2-teleport, not(round-2-finished)), all(round-3-teleport, not(round-3-finished))))">
             <set var="playing" value="1"/>
         </switch-scope>
+        <action filter="announce_kit=1">
+            <message text="`7[`6Arena Master`7] `6Tirion`r: {kit}!">
+                <replacements>
+                    <replacement id="kit">current-kit-replacement</replacement>
+                </replacements>
+            </message>
+        </action>
         <if constant="kit-count" constant-value="1.." constant-comparison="range">
             <action filter="current_kit=0">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-0-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-0"/>
                 </switch-scope>
@@ -2524,9 +2574,6 @@
         </if>
         <if constant="kit-count" constant-value="2.." constant-comparison="range">
             <action filter="current_kit=1">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-1-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-1"/>
                 </switch-scope>
@@ -2534,9 +2581,6 @@
         </if>
         <if constant="kit-count" constant-value="3.." constant-comparison="range">
             <action filter="current_kit=2">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-2-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-2"/>
                 </switch-scope>
@@ -2544,9 +2588,6 @@
         </if>
         <if constant="kit-count" constant-value="4.." constant-comparison="range">
             <action filter="current_kit=3">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-3-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-3"/>
                 </switch-scope>
@@ -2554,9 +2595,6 @@
         </if>
         <if constant="kit-count" constant-value="5.." constant-comparison="range">
             <action filter="current_kit=4">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-4-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-4"/>
                 </switch-scope>
@@ -2564,9 +2602,6 @@
         </if>
         <if constant="kit-count" constant-value="6.." constant-comparison="range">
             <action filter="current_kit=5">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-5-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-5"/>
                 </switch-scope>
@@ -2574,9 +2609,6 @@
         </if>
         <if constant="kit-count" constant-value="7.." constant-comparison="range">
             <action filter="current_kit=6">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-6-name}`b!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-6"/>
                 </switch-scope>
@@ -2584,9 +2616,6 @@
         </if>
         <if constant="kit-count" constant-value="8.." constant-comparison="range">
             <action filter="current_kit=7">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-7-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-7"/>
                 </switch-scope>
@@ -2594,9 +2623,6 @@
         </if>
         <if constant="kit-count" constant-value="9.." constant-comparison="range">
             <action filter="current_kit=8">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-8-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-8"/>
                 </switch-scope>
@@ -2604,9 +2630,6 @@
         </if>
         <if constant="kit-count" constant-value="10.." constant-comparison="range">
             <action filter="current_kit=9">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-9-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-9"/>
                 </switch-scope>
@@ -2614,9 +2637,6 @@
         </if>
         <if constant="kit-count" constant-value="11.." constant-comparison="range">
             <action filter="current_kit=10">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-10-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-10"/>
                 </switch-scope>
@@ -2624,9 +2644,6 @@
         </if>
         <if constant="kit-count" constant-value="12.." constant-comparison="range">
             <action filter="current_kit=11">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-11-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-11"/>
                 </switch-scope>
@@ -2634,9 +2651,6 @@
         </if>
         <if constant="kit-count" constant-value="13.." constant-comparison="range">
             <action filter="current_kit=12">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-12-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-12"/>
                 </switch-scope>
@@ -2644,9 +2658,6 @@
         </if>
         <if constant="kit-count" constant-value="14.." constant-comparison="range">
             <action filter="current_kit=13">
-                <action filter="announce_kit=1">
-                    <message text="`7[`6Arena Master`7] `6Tirion`r: ${kit-13-name}`r!"/>
-                </action>
                 <switch-scope inner="player" filter="participating">
                     <kit id="kit-13"/>
                 </switch-scope>
@@ -2676,76 +2687,11 @@
     </action>
     <action id="kit-title" scope="match">
         <switch-scope inner="player" filter="participating">
-            <if constant="kit-count" constant-value="1.." constant-comparison="range">
-                <action filter="current_kit=0">
-                    <message actionbar="${kit-0-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="2.." constant-comparison="range">
-                <action filter="current_kit=1">
-                    <message actionbar="${kit-1-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="3.." constant-comparison="range">
-                <action filter="current_kit=2">
-                    <message actionbar="${kit-2-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="4.." constant-comparison="range">
-                <action filter="current_kit=3">
-                    <message actionbar="${kit-3-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="5.." constant-comparison="range">
-                <action filter="current_kit=4">
-                    <message actionbar="${kit-4-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="6.." constant-comparison="range">
-                <action filter="current_kit=5">
-                    <message actionbar="${kit-5-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="7.." constant-comparison="range">
-                <action filter="current_kit=6">
-                    <message actionbar="${kit-6-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="8.." constant-comparison="range">
-                <action filter="current_kit=7">
-                    <message actionbar="${kit-7-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="9.." constant-comparison="range">
-                <action filter="current_kit=8">
-                    <message actionbar="${kit-8-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="10.." constant-comparison="range">
-                <action filter="current_kit=9">
-                    <message actionbar="${kit-9-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="11.." constant-comparison="range">
-                <action filter="current_kit=10">
-                    <message actionbar="${kit-10-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="12.." constant-comparison="range">
-                <action filter="current_kit=11">
-                    <message actionbar="${kit-11-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="13.." constant-comparison="range">
-                <action filter="current_kit=12">
-                    <message actionbar="${kit-12-name}"/>
-                </action>
-            </if>
-            <if constant="kit-count" constant-value="14.." constant-comparison="range">
-                <action filter="current_kit=13">
-                    <message actionbar="${kit-13-name}"/>
-                </action>
-            </if>
+            <message actionbar="{kit}">
+                <replacements>
+                    <replacement id="kit">current-kit-replacement</replacement>
+                </replacements>
+            </message>
         </switch-scope>
     </action>
     <trigger scope="player" observers="true">
@@ -3333,30 +3279,20 @@
     <trigger scope="match" filter="match-finished">
         <action>
             <set var="current_round" value="0"/>
-            <action filter="round-3-arena-1-team-1-win">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: Congratulations `4Red `ron winning The Grand ${tournament-type} Tournament!"/>
-            </action>
-            <action filter="round-3-arena-1-team-2-win">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: Congratulations `9Blue `ron winning The Grand ${tournament-type} Tournament!"/>
-            </action>
-            <action filter="round-3-arena-1-team-3-win">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: Congratulations `2Green `ron winning The Grand ${tournament-type} Tournament!"/>
-            </action>
-            <action filter="round-3-arena-1-team-4-win">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: Congratulations `5Purple `ron winning The Grand ${tournament-type} Tournament!"/>
-            </action>
-            <action filter="round-3-arena-1-team-5-win">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: Congratulations `eYellow `ron winning The Grand ${tournament-type} Tournament!"/>
-            </action>
-            <action filter="round-3-arena-1-team-6-win">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: Congratulations `6Orange `ron winning The Grand ${tournament-type} Tournament!"/>
-            </action>
-            <action filter="round-3-arena-1-team-7-win">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: Congratulations `dPink `ron winning The Grand ${tournament-type} Tournament!"/>
-            </action>
-            <action filter="round-3-arena-1-team-8-win">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: Congratulations `3Cyan `ron winning The Grand ${tournament-type} Tournament!"/>
-            </action>
+            <message text="`7[`6Arena Master`7] `6Tirion`r: Congratulations {team} `ron winning The Grand ${tournament-type} Tournament!">
+                <replacements>
+                    <switch id="team">
+                        <case filter="round-3-arena-1-team-1-win" result="`4Red"/>
+                        <case filter="round-3-arena-1-team-2-win" result="`9Blue"/>
+                        <case filter="round-3-arena-1-team-3-win" result="`2Green"/>
+                        <case filter="round-3-arena-1-team-4-win" result="`5Purple"/>
+                        <case filter="round-3-arena-1-team-5-win" result="`eYellow"/>
+                        <case filter="round-3-arena-1-team-6-win" result="`6Orange"/>
+                        <case filter="round-3-arena-1-team-7-win" result="`dPink"/>
+                        <case filter="round-3-arena-1-team-8-win" result="`3Cyan"/>
+                    </switch>
+                </replacements>
+            </message>
         </action>
     </trigger>
     <trigger scope="player" filter="all(all-arena-spectator, participating, not(between-rounds), not(lobby))" action="spectator-kit"/>

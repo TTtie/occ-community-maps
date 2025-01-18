@@ -1,6 +1,6 @@
 <map proto="1.5.0" game="Arcade">
 <name>Tic Tac K.O.</name>
-<version>1.2.1</version>
+<version>1.2.2</version>
 <phase>staging</phase>
 <created>2024-10-30</created>
 <objective>Claim 3 tiles in a row to win!</objective>
@@ -414,12 +414,14 @@
             <time>6s</time>
         </filter>
         <action>
-            <action filter="gamerule_alternate_vote=0">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: The winning team will then `avote `ron which grid space to claim!"/>
-            </action>
-            <action filter="gamerule_alternate_vote=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: The winning team will then `avote `ron which grid space to claim first, then the losing team will vote second!"/>
-            </action>
+            <message text="`7[`6Arena Master`7] `6Tirion`r: The winning team will then `avote `ron which grid space to {what}">
+                <replacements>
+                    <switch id="what" value="gamerule_alternate_vote">
+                        <case match="0" result="claim!"/>
+                        <case match="1" result="claim first, then the losing team will vote second!"/>
+                    </switch>
+                </replacements>
+            </message>
             <sound key="${entity.villager.trade}"/>
         </action>
     </trigger>
@@ -641,12 +643,14 @@
             <after duration="1s" filter="all(match-running, state=${state_vote_cd})"/>
         </filter>
         <action>
-            <action filter="next_voter=${team_x}">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `9Crosses `rwill now vote on which space on the grid to claim!"/>
-            </action>
-            <action filter="next_voter=${team_o}">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `4Naughts `rwill now vote on which space on the grid to claim!"/>
-            </action>
+            <message text="`7[`6Arena Master`7] `6Tirion`r: {who} will now vote on which space on the grid to claim!">
+                <replacements>
+                    <switch id="who" value="next_voter">
+                        <case match="${team_x}" result="`9Crosses"/>
+                        <case match="${team_o}" result="`4Naughts"/>
+                    </switch>
+                </replacements>
+            </message>
             <action id="start-next-vote"/>
             <switch-scope inner="team" filter="currently_voting=1">
                 <sound key="${entity.experience_orb.pickup}" volume="1" pitch="1.2"/>
@@ -731,20 +735,26 @@
         <set var="current_platform" value="top"/>
     </action>
     <action id="platform-announcer" scope="match">
-        <action filter="current_platform=0"><message text="`7[`6Arena Master`7] `6Tirion`r: `cIncendiary`r!"/></action>
-        <action filter="current_platform=1"><message text="`7[`6Arena Master`7] `6Tirion`r: `3Mushroom`r!"/></action>
-        <action filter="current_platform=2"><message text="`7[`6Arena Master`7] `6Tirion`r: `2Forest`r!"/></action>
-        <action filter="current_platform=3"><message text="`7[`6Arena Master`7] `6Tirion`r: `6Desert`r!"/></action>
-        <action filter="current_platform=4"><message text="`7[`6Arena Master`7] `6Tirion`r: `8Constellation`r!"/></action>
-        <action filter="current_platform=5"><message text="`7[`6Arena Master`7] `6Tirion`r: `8Dust Bowl`r!"/></action>
-        <action filter="current_platform=6"><message text="`7[`6Arena Master`7] `6Tirion`r: `dCharge`r!"/></action>
-        <action filter="current_platform=7"><message text="`7[`6Arena Master`7] `6Tirion`r: `cHeat`r!"/></action>
-        <action filter="current_platform=8"><message text="`7[`6Arena Master`7] `6Tirion`r: `eBlocks`r!"/></action>
-        <action filter="current_platform=9"><message text="`7[`6Arena Master`7] `6Tirion`r: `dWooly`r!"/></action>
-        <action filter="current_platform=10"><message text="`7[`6Arena Master`7] `6Tirion`r: `5Ships`r!"/></action>
-        <action filter="current_platform=11"><message text="`7[`6Arena Master`7] `6Tirion`r: `eBeach`r!"/></action>
-        <action filter="current_platform=12"><message text="`7[`6Arena Master`7] `6Tirion`r: `3Frosty`r!"/></action>
-        <action filter="current_platform=13"><message text="`7[`6Arena Master`7] `6Tirion`r: `2Plains`r!"/></action>
+        <message text="`7[`6Arena Master`7] `6Tirion`r: {platform}!">
+            <replacements>
+                <switch id="platform" value="current_platform">
+                    <case match="0" result="`cIncendiary"/>
+                    <case match="1" result="`3Mushroom"/>
+                    <case match="2" result="`2Forest"/>
+                    <case match="3" result="`6Desert"/>
+                    <case match="4" result="`8Constellation"/>
+                    <case match="5" result="`8Dust Bowl"/>
+                    <case match="6" result="`dCharge"/>
+                    <case match="7" result="`cHeat"/>
+                    <case match="8" result="`eBlocks"/>
+                    <case match="9" result="`dWooly"/>
+                    <case match="10" result="`5Ships"/>
+                    <case match="11" result="`eBeach"/>
+                    <case match="12" result="`3Frosty"/>
+                    <case match="13" result="`2Plains"/>
+                </switch>
+            </replacements>
+        </message>
     </action>
     <action id="kit-picker" scope="match">
         <set var="i" value="0"/>
@@ -764,98 +774,82 @@
         <set var="current_kit" value="top"/>
     </action>
     <action id="kit-applicator" scope="match">
+        <action filter="announce=1">
+            <message text="`7[`6Arena Master`7] `6Tirion`r: {kit}!">
+                <replacements>
+                    <switch id="kit" value="current_kit">
+                        <case match="0" result="`bConquest"/>
+                        <case match="1" result="`aArcher"/>
+                        <case match="2" result="`cMCSG"/>
+                        <case match="3" result="`dSumo"/>
+                        <case match="4" result="`bSlappy Fish"/>
+                        <case match="5" result="`5RAGE"/>
+                        <case match="6" result="`bIron"/>
+                        <case match="7" result="`6Gold"/>
+                        <case match="8" result="`3Diamond"/>
+                        <case match="9" result="`6Soup"/>
+                        <case match="10" result="`3Bridge"/>
+                        <case match="11" result="`cUHC"/>
+                    </switch>
+                </replacements>
+            </message>
+        </action>
         <action filter="current_kit=0">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `bConquest`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-0"/>
             </switch-scope>
         </action>
         <action filter="current_kit=1">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `aArcher`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-1"/>
             </switch-scope>
         </action>
         <action filter="current_kit=2">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `cMCSG`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-2"/>
             </switch-scope>
         </action>
         <action filter="current_kit=3">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `dSumo`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-3"/>
             </switch-scope>
         </action>
         <action filter="current_kit=4">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `bSlappy Fish`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-4"/>
             </switch-scope>
         </action>
         <action filter="current_kit=5">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `5RAGE`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-5"/>
             </switch-scope>
         </action>
         <action filter="current_kit=6">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `bIron`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-6"/>
             </switch-scope>
         </action>
         <action filter="current_kit=7">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `6Gold`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-7"/>
             </switch-scope>
         </action>
         <action filter="current_kit=8">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `3Diamond`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-8"/>
             </switch-scope>
         </action>
         <action filter="current_kit=9">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `6Soup`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-9"/>
             </switch-scope>
         </action>
         <action filter="current_kit=10">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `3Bridge`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-10"/>
             </switch-scope>
         </action>
         <action filter="current_kit=11">
-            <action filter="announce=1">
-                <message text="`7[`6Arena Master`7] `6Tirion`r: `cUHC`r!"/>
-            </action>
             <switch-scope inner="player" filter="alive">
                 <kit id="kit-11"/>
             </switch-scope>

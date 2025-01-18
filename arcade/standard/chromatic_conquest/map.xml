@@ -1,6 +1,6 @@
 <map proto="1.5.0">
 <name>Chromatic Conquest</name>
-<version>1.0.1</version>
+<version>1.0.2</version>
 <objective>Eliminate other players that match your color bounty. Most points wins!</objective>
 <created>2024-03-07</created>
 <phase>development</phase>
@@ -254,6 +254,32 @@
     <variable id="bounties" scope="match" default="0"/>
     <variable id="bounty_value" scope="match" default="0"/>
 </variables>
+<replacements>
+    <switch id="target-team" value="tmp" scope="player">
+        <case match="1" result="`6Orange"/>
+        <case match="2" result="`dMagenta"/>
+        <case match="3" result="`eYellow"/>
+        <case match="4" result="`aLime"/>
+        <case match="5" result="`4Red"/>
+        <case match="6" result="`3Cyan"/>
+        <case match="7" result="`5Purple"/>
+        <case match="8" result="`9Blue"/>
+        <case match="9" result="`2Green"/>
+        <case match="10" result="`4Red"/>
+    </switch>
+    <switch id="hunt-team" value="hunt_color" scope="player">
+        <case match="1" result="`6Orange"/>
+        <case match="2" result="`dMagenta"/>
+        <case match="3" result="`eYellow"/>
+        <case match="4" result="`aLime"/>
+        <case match="5" result="`4Red"/>
+        <case match="6" result="`3Cyan"/>
+        <case match="7" result="`5Purple"/>
+        <case match="8" result="`9Blue"/>
+        <case match="9" result="`2Green"/>
+        <case match="10" result="`4Red"/>
+    </switch>
+</replacements>
 <actions>
     <action id="init-self-color" scope="player">
         <action filter="is-orange">
@@ -295,62 +321,58 @@
     <action id="random-hotbar" scope="player" expose="true">
         <set var="tmp" value="ceil(random() * 10)"/>
         <sound key="${block.note_block.harp}" volume="1" pitch="1.5"/>
+        <sound key="note.harp" volume="1" pitch="1.5"/>
+        <message actionbar="`r`b`lTarget: {team}">
+            <replacements>
+                <replacement id="team">target-team</replacement>
+            </replacements>
+        </message>
         <action filter="tmp=1">
-            <message actionbar="`r`b`lTarget: `6Orange"/>
             <kit force="true">
                 <item slot="8" name="`r`b`lTarget: `6Orange" damage="1" material="wool" locked="true"/>
             </kit>
         </action>
         <action filter="tmp=2">
-            <message actionbar="`r`b`lTarget: `dMagenta"/>
             <kit force="true">
                 <item slot="8" name="`r`b`lTarget: `dMagenta" damage="2" material="wool" locked="true"/>
             </kit>
         </action>
         <action filter="tmp=3">
-            <message actionbar="`r`b`lTarget: `eYellow"/>
             <kit force="true">
                 <item slot="8" name="`r`b`lTarget: `eYellow" damage="4" material="wool" locked="true"/>
             </kit>
         </action>
         <action filter="tmp=4">
-            <message actionbar="`r`b`lTarget: `aLime"/>
             <kit force="true">
                 <item slot="8" name="`r`b`lTarget: `aLime" damage="5" material="wool" locked="true"/>
             </kit>
         </action>
         <action filter="tmp=5">
-            <message actionbar="`r`b`lTarget: `4Red"/>
             <kit force="true">
                 <item slot="8" name="`r`b`lTarget: `4Red" damage="14" material="wool" locked="true"/>
             </kit>
         </action>
         <action filter="tmp=6">
-            <message actionbar="`r`b`lTarget: `3Cyan"/>
             <kit force="true">
                 <item slot="8" name="`r`b`lTarget: `3Cyan" damage="9" material="wool" locked="true"/>
             </kit>
         </action>
         <action filter="tmp=7">
-            <message actionbar="`r`b`lTarget: `5Purple"/>
             <kit force="true">
                 <item slot="8" name="`r`b`lTarget: `5Purple" damage="10" material="wool" locked="true"/>
             </kit>
         </action>
         <action filter="tmp=8">
-            <message actionbar="`r`b`lTarget: `9Blue"/>
             <kit force="true">
                 <item slot="8" name="`r`b`lTarget: `9Blue" damage="11" material="wool" locked="true"/>
             </kit>
         </action>
         <action filter="tmp=9">
-            <message actionbar="`r`b`lTarget: `2Green"/>
             <kit force="true">
                 <item slot="8" name="`r`b`lTarget: `2Green" damage="13" material="wool" locked="true"/>
             </kit>
         </action>
         <action filter="tmp=10">
-            <message actionbar="`r`b`lTarget: `4Red"/>
             <kit force="true">
                 <item slot="8" name="`r`b`lTarget: `4Red" damage="14" material="wool" locked="true"/>
             </kit>
@@ -373,62 +395,57 @@
     <trigger scope="player" filter="rotations=0">
         <action>
             <set var="hunt_color" value="ceil(random() * 10)"/>
+            <message subtitle="`bYour target is {team}" title="`a`lNew bounty!">
+                <replacements>
+                    <replacement id="team">hunt-team</replacement>
+                </replacements>
+            </message>
             <action filter="hunt_color=1">
-                <message subtitle="`bYour target is `6Orange" title="`a`lNew bounty!"/>
                 <kit force="true">
                     <item slot="8" name="`r`b`lTarget: `6Orange" damage="1" material="wool" locked="true"/>
                 </kit>
             </action>
             <action filter="hunt_color=2">
-                <message subtitle="`bYour target is `dMagenta" title="`a`lNew bounty!"/>
                 <kit force="true">
                     <item slot="8" name="`r`b`lTarget: `dMagenta" damage="2" material="wool" locked="true"/>
                 </kit>
             </action>
             <action filter="hunt_color=3">
-                <message subtitle="`bYour target is `eYellow" title="`a`lNew bounty!"/>
                 <kit force="true">
                     <item slot="8" name="`r`b`lTarget: `eYellow" damage="4" material="wool" locked="true"/>
                 </kit>
             </action>
             <action filter="hunt_color=4">
-                <message subtitle="`bYour target is `aLime" title="`a`lNew bounty!"/>
                 <kit force="true">
                     <item slot="8" name="`r`b`lTarget: `aLime" damage="5" material="wool" locked="true"/>
                 </kit>
             </action>
             <action filter="hunt_color=5">
-                <message subtitle="`bYour target is `4Red" title="`a`lNew bounty!"/>
                 <kit force="true">
                     <item slot="8" name="`r`b`lTarget: `4Red" damage="14" material="wool" locked="true"/>
                 </kit>
             </action>
             <action filter="hunt_color=6">
-                <message subtitle="`bYour target is `3Cyan" title="`a`lNew bounty!"/>
                 <kit force="true">
                     <item slot="8" name="`r`b`lTarget: `3Cyan" damage="9" material="wool" locked="true"/>
                 </kit>
             </action>
             <action filter="hunt_color=7">
-                <message subtitle="`bYour target is `5Purple" title="`a`lNew bounty!"/>
                 <kit force="true">
                     <item slot="8" name="`r`b`lTarget: `5Purple" damage="10" material="wool" locked="true"/>
                 </kit>
             </action>
             <action filter="hunt_color=8">
-                <message subtitle="`bYour target is `9Blue" title="`a`lNew bounty!"/>
                 <kit force="true">
                     <item slot="8" name="`r`b`lTarget: `9Blue" damage="11" material="wool" locked="true"/>
                 </kit>
             </action>
             <action filter="hunt_color=9">
-                <message subtitle="`bYour target is `2Green" title="`a`lNew bounty!"/>
                 <kit force="true">
                     <item slot="8" name="`r`b`lTarget: `2Green" damage="13" material="wool" locked="true"/>
                 </kit>
             </action>
             <action filter="hunt_color=10">
-                <message subtitle="`bYour target is `4Red" title="`a`lNew bounty!"/>
                 <kit force="true">
                     <item slot="8" name="`r`b`lTarget: `4Red" damage="14" material="wool" locked="true"/>
                 </kit>
@@ -443,36 +460,11 @@
             <pulse duration="1" period="2" filter="not(hunt_color=0)"/>
         </filter>
         <action>
-            <action filter="hunt_color=1">
-                <message actionbar="`r`b`lTarget: `6Orange"/>
-            </action>
-            <action filter="hunt_color=2">
-                <message actionbar="`r`b`lTarget: `dMagenta"/>
-            </action>
-            <action filter="hunt_color=3">
-                <message actionbar="`r`b`lTarget: `eYellow"/>
-            </action>
-            <action filter="hunt_color=4">
-                <message actionbar="`r`b`lTarget: `aLime"/>
-            </action>
-            <action filter="hunt_color=5">
-                <message actionbar="`r`b`lTarget: `4Red"/>
-            </action>
-            <action filter="hunt_color=6">
-                <message actionbar="`r`b`lTarget: `3Cyan"/>
-            </action>
-            <action filter="hunt_color=7">
-                <message actionbar="`r`b`lTarget: `5Purple"/>
-            </action>
-            <action filter="hunt_color=8">
-                <message actionbar="`r`b`lTarget: `9Blue"/>
-            </action>
-            <action filter="hunt_color=9">
-                <message actionbar="`r`b`lTarget: `2Green"/>
-            </action>
-            <action filter="hunt_color=10">
-                <message actionbar="`r`b`lTarget: `4Red"/>
-            </action>
+            <message actionbar="`r`b`lTarget: {team}">
+                <replacements>
+                    <replacement id="team">hunt-team</replacement>
+                </replacements>
+            </message>
         </action>
     </trigger>
     <action id="negative-kill" scope="player">
@@ -488,38 +480,11 @@
             </replacements>
         </message>
         <action filter="not(streak=-3)">
-            <action>
-                <action filter="hunt_color=1">
-                    <message subtitle="`bYour target is `6Orange" title="`c`lFailed bounty"/>
-                </action>
-                <action filter="hunt_color=2">
-                    <message subtitle="`bYour target is `dMagenta" title="`c`lFailed bounty"/>
-                </action>
-                <action filter="hunt_color=3">
-                    <message subtitle="`bYour target is `eYellow" title="`c`lFailed bounty"/>
-                </action>
-                <action filter="hunt_color=4">
-                    <message subtitle="`bYour target is `aLime" title="`c`lFailed bounty"/>
-                </action>
-                <action filter="hunt_color=5">
-                    <message subtitle="`bYour target is `4Red" title="`c`lFailed bounty"/>
-                </action>
-                <action filter="hunt_color=6">
-                    <message subtitle="`bYour target is `3Cyan" title="`c`lFailed bounty"/>
-                </action>
-                <action filter="hunt_color=7">
-                    <message subtitle="`bYour target is `5Purple" title="`c`lFailed bounty"/>
-                </action>
-                <action filter="hunt_color=8">
-                    <message subtitle="`bYour target is `9Blue" title="`c`lFailed bounty"/>
-                </action>
-                <action filter="hunt_color=9">
-                    <message subtitle="`bYour target is `2Green" title="`c`lFailed bounty"/>
-                </action>
-                <action filter="hunt_color=10">
-                    <message subtitle="`bYour target is `4Red" title="`c`lFailed bounty"/>
-                </action>
-            </action>
+            <message subtitle="`bYour target is {team}" title="`c`lFailed bounty">
+                <replacements>
+                    <replacement id="team">hunt-team</replacement>
+                </replacements>
+            </message>
         </action>
         <action filter="streak=..-3">
             <set var="streak" value="0"/>
